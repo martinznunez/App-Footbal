@@ -4,7 +4,7 @@ import { obtenerJugadoresFiltrados } from "../selectors/players";
 import styled from "@emotion/styled";
 import Error from "./Error";
 
-const MensajeTabla = styled.p`
+const MensajeTabla = styled.td`
   font-size: 3rem;
   margin-top: 30px;
   width: 90%;
@@ -22,7 +22,7 @@ const Tabla = () => {
       {mensajeError ? (
         <Error />
       ) : (
-        <table className="table ">
+        <table className="table" data-testid="tabla">
           <thead>
             <tr>
               <th scope="col">Player</th>
@@ -34,15 +34,19 @@ const Tabla = () => {
           <tbody>
             {resultadoSelector.length > 0 ? (
               resultadoSelector.map((jugador) => (
-                <tr>
+                <tr key={jugador.name}>
                   <td>{jugador.name}</td>
-                  <td> {jugador.position} </td>
-                  <td> {jugador.nationality} </td>
-                  <td> {jugador.age} </td>
+                  <td>{jugador.position}</td>
+                  <td>{jugador.nationality}</td>
+                  <td>{jugador.age}</td>
                 </tr>
               ))
             ) : (
-              <MensajeTabla>No hay Resultados para la busqueda</MensajeTabla>
+              <tr>
+                <MensajeTabla data-testid="alerta-mensaje">
+                  No hay Resultados para la busqueda
+                </MensajeTabla>
+              </tr>
             )}
           </tbody>
         </table>

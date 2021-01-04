@@ -18,7 +18,7 @@ const ContainerMensajeError = styled.div`
 const Error = () => {
   return (
     <ContainerMensajeError>
-      <p> Algo salio mal!! </p>
+      <p>Algo salio mal!!</p>
     </ContainerMensajeError>
   );
 };

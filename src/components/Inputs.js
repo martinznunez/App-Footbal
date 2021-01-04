@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-
 import { useDispatch } from "react-redux";
-
 import getAxios from "../config/axios";
 
 import {
@@ -30,7 +28,7 @@ const ContainerNav = styled.div`
   }
 `;
 
-const Conatinerfrom = styled.form`
+const ContainerForm = styled.form`
   @media screen and (min-width: 760px) {
     display: flex;
     align-items: center;
@@ -48,14 +46,11 @@ const Inputs = () => {
 
   const dispatch = useDispatch();
 
-  const obtenerValue = (datosInputs) =>
+  const obtenerValue = (datosInputs) => {
     dispatch(obtenerValoresInputs(datosInputs));
+  };
 
-  const obtenerData = (data) => dispatch(obtenerConsultaGet(data));
-
-  const getError = (error) => dispatch(obtenerConsultaGetError(error));
-
-  const HashSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     name.trim();
@@ -63,23 +58,27 @@ const Inputs = () => {
     obtenerValue({ name, age, posicion });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    try {
-      const resultado = await getAxios.get();
+  useEffect(() => {
+    const handleResult = async () => {
+      try {
+        const resultado = await getAxios.get();
 
-      obtenerData(resultado.data);
-    } catch (error) {
-      getError(error);
-    }
-  }, []);
+        dispatch(obtenerConsultaGet(resultado.data));
+      } catch (error) {
+        dispatch(obtenerConsultaGetError(error));
+      }
+    };
+
+    handleResult();
+  }, [dispatch]);
 
   return (
     <>
       <ContainerNav>
-        <Conatinerfrom onSubmit={HashSubmit}>
+        <ContainerForm onSubmit={handleSubmit}>
           <div>
             <input
+              data-testid="name-input"
               onChange={(e) => setName(e.target.value)}
               type="text"
               placeholder="Player Name"
@@ -89,13 +88,17 @@ const Inputs = () => {
           <div>
             <input
               onChange={(e) => setAge(Number(e.target.value))}
+              data-testid="age-input"
               type="number"
               min="18"
               max="40"
               placeholder="Age"
             />
           </div>
-          <select onChange={(e) => setPosicion(e.target.value)}>
+          <select
+            data-testid="selec"
+            onChange={(e) => setPosicion(e.target.value)}
+          >
             <option value="">--Selecciona categoria--</option>
             <option>Attacking Midfield</option>
             <option>Central Midfield</option>
@@ -109,9 +112,9 @@ const Inputs = () => {
             <option>Right-Back</option>
           </select>
           <div>
-            <input type="submit" value="Buscar" />
+            <input data-testid="btn-submit" type="submit" value="Buscar" />
           </div>
-        </Conatinerfrom>
+        </ContainerForm>
       </ContainerNav>
     </>
   );
