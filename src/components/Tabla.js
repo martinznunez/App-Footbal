@@ -20,7 +20,9 @@ const Tabla = () => {
   return (
     <>
       {mensajeError ? (
-        <Error />
+        <div data-testid="error">
+          <Error />
+        </div>
       ) : (
         <table className="table" data-testid="tabla">
           <thead>

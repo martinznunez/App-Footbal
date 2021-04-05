@@ -29,9 +29,11 @@ const ContainerNav = styled.div`
 `;
 
 const ContainerForm = styled.form`
+  text-align: center;
   @media screen and (min-width: 760px) {
     display: flex;
     align-items: center;
+
     input {
       width: 150px;
       padding: 5px;

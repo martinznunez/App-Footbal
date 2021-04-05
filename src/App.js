@@ -23,7 +23,7 @@ function App() {
     <>
       <Provider store={store}>
         <ContainerTitulo>
-          <h1 data-testid="titulo">footbal Player</h1>
+          <h1 data-testid="titulo">fotball Players</h1>
         </ContainerTitulo>
         <div>
           <Inputs />
